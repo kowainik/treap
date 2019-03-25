@@ -1,0 +1,123 @@
+cabal-version:       2.0
+name:                treap
+version:             0.0.0
+synopsis:            Efficient implementation of the treap data structure
+description:         Efficient implementation of the treap data structure
+homepage:            https://github.com/ChShersh/treap
+bug-reports:         https://github.com/ChShersh/treap/issues
+license:             MPL-2.0
+license-file:        LICENSE
+author:              Dmitrii Kovanikov
+maintainer:          kovanikov@gmail.com
+copyright:           2019 Dmitrii Kovanikov
+category:            Data Structure, Tree
+build-type:          Simple
+extra-doc-files:     README.md
+                   , CHANGELOG.md
+tested-with:         GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.3
+
+source-repository head
+  type:                git
+  location:            https://github.com/ChShersh/treap.git
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Treap
+                       
+
+  build-depends:       base >= 4.10.1.0 && < 4.13
+                     
+
+  ghc-options:         -Wall
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+
+  default-language:    Haskell2010
+  default-extensions:  ConstraintKinds
+                       DeriveGeneric
+                       GeneralizedNewtypeDeriving
+                       InstanceSigs
+                       KindSignatures
+                       LambdaCase
+                       OverloadedStrings
+                       RecordWildCards
+                       ScopedTypeVariables
+                       StandaloneDeriving
+                       TupleSections
+                       TypeApplications
+                       ViewPatterns
+
+test-suite treap-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+
+  build-depends:       base >= 4.10.1.0 && < 4.13
+                     , treap
+                     
+
+  ghc-options:         -Wall
+                       -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+
+  default-language:    Haskell2010
+  default-extensions:  ConstraintKinds
+                       DeriveGeneric
+                       GeneralizedNewtypeDeriving
+                       InstanceSigs
+                       KindSignatures
+                       LambdaCase
+                       OverloadedStrings
+                       RecordWildCards
+                       ScopedTypeVariables
+                       StandaloneDeriving
+                       TupleSections
+                       TypeApplications
+                       ViewPatterns
+
+benchmark treap-benchmark
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      benchmark
+  main-is:             Main.hs
+
+  build-depends:       base >= 4.10.1.0 && < 4.13
+                     , gauge
+                     , treap
+                     
+
+  ghc-options:         -Wall
+                       -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+
+  default-language:    Haskell2010
+  default-extensions:  ConstraintKinds
+                       DeriveGeneric
+                       GeneralizedNewtypeDeriving
+                       InstanceSigs
+                       KindSignatures
+                       LambdaCase
+                       OverloadedStrings
+                       RecordWildCards
+                       ScopedTypeVariables
+                       StandaloneDeriving
+                       TupleSections
+                       TypeApplications
+                       ViewPatterns
