@@ -1,6 +1,6 @@
 module Treap
-       ( someFunc
+       ( module T
        ) where
 
-someFunc :: IO ()
-someFunc = putStrLn ("someFunc" :: String)
+import Treap.Pretty as T (compactShowNode, pretty, prettyWith, verboseShowNode)
+import Treap.Pure as T
