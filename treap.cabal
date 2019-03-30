@@ -55,7 +55,8 @@ common common-options
 
 library
   import:              common-options
-  build-depends:       hashable ^>= 1.2.7.0
+  build-depends:       deepseq ^>= 1.4
+                     , hashable ^>= 1.2.7.0
                      , random ^>= 1.1
   hs-source-dirs:      src
   exposed-modules:     Treap

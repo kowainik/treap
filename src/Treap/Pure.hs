@@ -3,6 +3,7 @@
 __NOTE:__ Letter \( d \) in the documentation means depth of the tree.
 -}
 
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Treap.Pure
@@ -25,6 +26,7 @@ module Treap.Pure
 
 import Prelude hiding (lookup)
 
+import Control.DeepSeq (NFData)
 import Data.Foldable (foldl')
 import GHC.Exts (IsList (..))
 import GHC.Generics (Generic)
@@ -38,6 +40,7 @@ data Treap k p a
     = Node !k !p !a !(Treap k p a) !(Treap k p a)
     | Empty
     deriving (Show, Read, Eq, Generic, Functor, Foldable, Traversable)
+    deriving anyclass (NFData)
 
 {- | Typeclass that allows to create 'Treap' from the list of triples. If all
 priorities are random then the expected performance of the @fromList@ function

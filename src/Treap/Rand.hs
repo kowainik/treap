@@ -22,6 +22,7 @@ module Treap.Rand
 
 import Prelude hiding (lookup)
 
+import Control.DeepSeq (NFData (..))
 import Data.Foldable (foldl')
 import GHC.Exts (IsList (..))
 import GHC.Generics (Generic)
@@ -58,6 +59,9 @@ instance Ord k => IsList (RandTreap k a) where
 
     toList :: RandTreap k a -> [(k, a)]
     toList = map (\(k, _, a) -> (k, a)) . toList . randTreapTree
+
+instance (NFData k, NFData a) => NFData (RandTreap k a) where
+    rnf RandTreap{..} = rnf randTreapTree `seq` ()
 
 ----------------------------------------------------------------------------
 -- Smart constructors
