@@ -37,7 +37,7 @@ import GHC.Generics (Generic)
 data Treap k p a
     = Node !k !p !a !(Treap k p a) !(Treap k p a)
     | Empty
-    deriving (Show, Read, Generic, Functor, Foldable, Traversable)
+    deriving (Show, Read, Eq, Generic, Functor, Foldable, Traversable)
 
 {- | Typeclass that allows to create 'Treap' from the list of triples. If all
 priorities are random then the expected performance of the @fromList@ function
@@ -61,10 +61,12 @@ instance (Ord k, Ord p) => IsList (Treap k p a) where
 -- | \( O(1) \). Create empty 'Treap'.
 empty :: Treap k p a
 empty = Empty
+{-# INLINE empty #-}
 
 -- | \( O(1) \). Create singleton 'Treap'.
 one :: k -> p -> a -> Treap k p a
 one k p a = Node k p a Empty Empty
+{-# INLINE one #-}
 
 ----------------------------------------------------------------------------
 -- Core functions
