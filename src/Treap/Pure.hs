@@ -18,9 +18,12 @@ module Treap.Pure
        , merge
 
          -- * Interface functions
+       , lookup
        , insert
        , delete
        ) where
+
+import Prelude hiding (lookup)
 
 import Data.Foldable (foldl')
 import GHC.Exts (IsList (..))
@@ -109,6 +112,17 @@ merge l@(Node k1 p1 a1 l1 r1) r@(Node k2 p2 a2 l2 r2)
 ----------------------------------------------------------------------------
 -- Core functions
 ----------------------------------------------------------------------------
+
+-- | \( O(d) \). Lookup a value by a given key inside 'Treap'.
+lookup :: forall k p a . Ord k => k -> Treap k p a -> Maybe a
+lookup k = go
+  where
+    go :: Treap k p a -> Maybe a
+    go Empty = Nothing
+    go (Node tk _ ta l r) = case compare k tk of
+        EQ -> Just ta
+        LT -> go l
+        GT -> go r
 
 -- | \( O(d) \). Insert a value into 'Treap' by given key and priority.
 insert :: forall k p a . (Ord k, Ord p) => k -> p -> a -> Treap k p a -> Treap k p a

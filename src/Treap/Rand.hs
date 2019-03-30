@@ -1,3 +1,5 @@
+{-# LANGUAGE TypeFamilies #-}
+
 {- | Fair implementation of the 'Treap' data structure that uses random
 generator for priorities.
 -}
@@ -13,10 +15,15 @@ module Treap.Rand
        , one
 
          -- * Interface functions
+       , lookup
        , insert
        , delete
        ) where
 
+import Prelude hiding (lookup)
+
+import Data.Foldable (foldl')
+import GHC.Exts (IsList (..))
 import GHC.Generics (Generic)
 import System.Random (Random (random), StdGen, mkStdGen)
 
@@ -35,6 +42,22 @@ data RandTreap k a = RandTreap
     { randTreapGen  :: !StdGen
     , randTreapTree :: !(Treap k Int a)
     } deriving (Show, Read, Generic, Functor, Foldable, Traversable)
+
+{- | Pure implementation of 'RandTreap' construction functions. Uses
+@'empty' :: RandTreap k a@ as a starting point. Functions have the following
+time complexity:
+
+1. 'fromList': \( O(n\ \log \ n) \)
+2. 'toList': \( O(n) \)
+-}
+instance Ord k => IsList (RandTreap k a) where
+    type Item (RandTreap k a) = (k, a)
+
+    fromList :: [(k, a)] -> RandTreap k a
+    fromList = foldl' (\t (k, a) -> insert k a t) empty
+
+    toList :: RandTreap k a -> [(k, a)]
+    toList = map (\(k, _, a) -> (k, a)) . toList . randTreapTree
 
 ----------------------------------------------------------------------------
 -- Smart constructors
@@ -65,6 +88,11 @@ one = oneWithGen (mkStdGen 0)
 ----------------------------------------------------------------------------
 -- Core functions
 ----------------------------------------------------------------------------
+
+-- | \( O(\log \ n) \). Lookup a value by a given key inside 'RandTreap'.
+lookup :: forall k a . Ord k => k -> RandTreap k a -> Maybe a
+lookup k = Treap.lookup k . randTreapTree
+{-# INLINE lookup #-}
 
 -- | \( O(\log \ n) \). Insert a value into 'RandTreap' by given key.
 insert :: Ord k => k -> a -> RandTreap k a -> RandTreap k a
