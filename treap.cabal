@@ -38,6 +38,9 @@ common common-options
   default-extensions:  BangPatterns
                        ConstraintKinds
                        DataKinds
+                       DeriveFunctor
+                       DeriveFoldable
+                       DeriveTraversable
                        DeriveGeneric
                        DerivingStrategies
                        GeneralizedNewtypeDeriving
@@ -53,11 +56,13 @@ common common-options
 library
   import:              common-options
   build-depends:       hashable ^>= 1.2.7.0
+                     , random ^>= 1.1
   hs-source-dirs:      src
   exposed-modules:     Treap
                          Treap.Hash
                          Treap.Pretty
                          Treap.Pure
+                         Treap.Rand
 
 
 test-suite treap-test

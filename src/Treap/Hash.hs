@@ -1,6 +1,3 @@
-{-# LANGUAGE DeriveTraversable #-}
-{-# LANGUAGE TypeFamilies      #-}
-
 {- | Implementation of the 'Treap' data structure where priority is a hash of a
 key. True 'Treap' uses random priority upon data structure insertion. However,
 in order to keep implementation pure, this module calculates priority from the
@@ -23,7 +20,6 @@ module Treap.Hash
        , delete
        ) where
 
-import Data.Foldable (foldl')
 import Data.Hashable (Hashable (hashWithSalt))
 import GHC.Generics (Generic)
 

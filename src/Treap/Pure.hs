@@ -3,10 +3,7 @@
 __NOTE:__ Letter \( d \) in the documentation means depth of the tree.
 -}
 
-{-# LANGUAGE DeriveFoldable    #-}
-{-# LANGUAGE DeriveFunctor     #-}
-{-# LANGUAGE DeriveTraversable #-}
-{-# LANGUAGE TypeFamilies      #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module Treap.Pure
        ( -- * Data structure
