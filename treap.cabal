@@ -1,8 +1,10 @@
 cabal-version:       2.4
 name:                treap
 version:             0.0.0
-synopsis:            Efficient implementation of the treap data structure
-description:         Efficient implementation of the treap data structure
+synopsis:            Efficient implementation of the implicit treap data structure
+description:
+    Efficient implementation of the implicit treap data structure.
+    Use this data structure if you want dynamic arrays with fast operations on segments.
 homepage:            https://github.com/ChShersh/treap
 bug-reports:         https://github.com/ChShersh/treap/issues
 license:             MPL-2.0
@@ -14,12 +16,13 @@ category:            Data Structure, Tree
 build-type:          Simple
 extra-doc-files:     README.md
                    , CHANGELOG.md
-tested-with:         GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.3
+tested-with:         GHC == 8.2.2
+                   , GHC == 8.4.4
+                   , GHC == 8.6.3
 
 source-repository head
   type:                git
   location:            https://github.com/ChShersh/treap.git
-
 
 common common-options
   build-depends:       base >= 4.10.1.0 && < 4.13
@@ -47,6 +50,7 @@ common common-options
                        InstanceSigs
                        KindSignatures
                        LambdaCase
+                       MultiParamTypeClasses
                        OverloadedStrings
                        RecordWildCards
                        ScopedTypeVariables
@@ -56,15 +60,14 @@ common common-options
 library
   import:              common-options
   build-depends:       deepseq ^>= 1.4
-                     , hashable ^>= 1.2.7.0
                      , mersenne-random-pure64 ^>= 0.2.2
 
   hs-source-dirs:      src
   exposed-modules:     Treap
-                         Treap.Hash
+                         Treap.Measured
                          Treap.Pretty
                          Treap.Pure
-                         Treap.Rand
+--                         Treap.Rand
 
 
 test-suite treap-test

@@ -1,9 +1,8 @@
--- | 'Treap' visualisation.
+-- | Very nice 'Treap' visualisation.
 
 module Treap.Pretty
        ( pretty
        , prettyWith
-       , verboseShowNode
        , compactShowNode
 
          -- * Internal implementation details
@@ -16,27 +15,13 @@ module Treap.Pretty
 import Data.Char (isSpace)
 import Data.List (dropWhileEnd, intercalate)
 
-import Treap.Pure (Treap (..))
+import Treap.Pure (Priority (..), Size (..), Treap (..))
 
 
--- | Intermidiate structure to help string conversion.
-data BinTree
-    = Leaf
-    | Branch String BinTree BinTree
-
-{- | Show 'Treap' in an extremely nice and pretty way using 'compactShowNode'.
+{- | Show 'Treap' in an extremely nice and pretty way.
 -}
-pretty :: forall k p a . (Show k, Show p, Show a) => Treap k p a -> String
+pretty :: forall m a . (Show m, Show a) => Treap m a -> String
 pretty = prettyWith compactShowNode
-
-{- | Show 'Treap' node in a format:
-
-@
-(k: <key>, p: <priority>) -> a
-@
--}
-verboseShowNode :: (Show k, Show p, Show a) => k -> p -> a -> String
-verboseShowNode k p a = "(k: " ++ show k ++ ", p: " ++ show p ++ ") -> " ++ show a
 
 {- | Show 'Treap' node in a format:
 
@@ -44,20 +29,26 @@ verboseShowNode k p a = "(k: " ++ show k ++ ", p: " ++ show p ++ ") -> " ++ show
 <key>,<priority>:a
 @
 -}
-compactShowNode :: (Show k, Show p, Show a) => k -> p -> a -> String
-compactShowNode k p a = show k ++ "," ++ show p ++ ":" ++ show a
+compactShowNode :: (Show m, Show a) => Size -> Priority -> m -> a -> String
+compactShowNode (Size sz) _ m a =
+    show sz ++ "," ++ show m ++ ":" ++ show a
 
 -- | Show 'Treap' in a nice way using given function to display node.
 prettyWith
-    :: forall k p a .
-       (k -> p -> a -> String)
-    -> Treap k p a
+    :: forall m a .
+       (Size -> Priority -> m -> a -> String)
+    -> Treap m a
     -> String
 prettyWith display = showTree . toBinTree
   where
-    toBinTree :: Treap k p a -> BinTree
-    toBinTree Empty                   = Leaf
-    toBinTree (Node k p a left right) = Branch (display k p a) (toBinTree left) (toBinTree right)
+    toBinTree :: Treap m a -> BinTree
+    toBinTree Empty = Leaf
+    toBinTree (Node sz p m a left right) = Branch (display sz p m a) (toBinTree left) (toBinTree right)
+
+-- | Intermidiate structure to help string conversion.
+data BinTree
+    = Leaf
+    | Branch String BinTree BinTree
 
 showTree :: BinTree -> String
 showTree Leaf                  = ""
