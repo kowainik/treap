@@ -57,7 +57,8 @@ library
   import:              common-options
   build-depends:       deepseq ^>= 1.4
                      , hashable ^>= 1.2.7.0
-                     , random ^>= 1.1
+                     , mersenne-random-pure64 ^>= 0.2.2
+
   hs-source-dirs:      src
   exposed-modules:     Treap
                          Treap.Hash
