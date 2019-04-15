@@ -29,6 +29,8 @@ module Treap.Pure
 
          -- * Cuts and joins
        , splitAt
+       , take
+       , drop
        , merge
 
          -- * Modification functions
@@ -39,7 +41,7 @@ module Treap.Pure
        , recalculate
        ) where
 
-import Prelude hiding (lookup, splitAt)
+import Prelude hiding (drop, lookup, splitAt, take)
 
 import Control.DeepSeq (NFData)
 import Data.Foldable (foldl')
@@ -209,6 +211,44 @@ splitAt i t
                 GT ->
                     let (!newRight, !t2) = go (k - lSize - 1) right
                     in (new p a left newRight, t2)
+
+{- | \( O(d) \). @'take' n t@ returns 'Treap' that contains first @n@ elements of the given
+'Treap' @t@.
+-}
+take :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
+take n t
+    | n <= 0         = Empty
+    | n >= sizeInt t = t
+    | otherwise      = go n t
+  where
+    go :: Int -> Treap m a -> Treap m a
+    go _ Empty = Empty
+    go 0 _     = Empty
+    go i (Node _ p _ a l r) =
+        let lSize = sizeInt l
+        in case compare i lSize of
+            LT -> go i l
+            EQ -> l
+            GT -> new p a l $ go (i - lSize - 1) r
+
+{- | \( O(d) \). @'drop' n t@ returns 'Treap' without first @n@ elements of the given
+'Treap' @t@.
+-}
+drop :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
+drop n t
+    | n <= 0         = t
+    | n >= sizeInt t = Empty
+    | otherwise      = go n t
+  where
+    go :: Int -> Treap m a -> Treap m a
+    go _ Empty = Empty
+    go 0 tree  = tree
+    go i (Node _ p _ a l r) =
+        let lSize = sizeInt l
+        in case compare i lSize of
+            LT -> new p a (go i l) r
+            EQ -> new p a Empty r
+            GT -> go (i - lSize - 1) r
 
 {- | \( O(\max\ d_1\ d_2) \). Merge two 'Treap's into single one.
 
