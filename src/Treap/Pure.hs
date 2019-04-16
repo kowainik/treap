@@ -29,9 +29,10 @@ module Treap.Pure
 
          -- * Cuts and joins
        , splitAt
+       , merge
        , take
        , drop
-       , merge
+       , rotate
 
          -- * Modification functions
        , insert
@@ -212,6 +213,32 @@ splitAt i t
                     let (!newRight, !t2) = go (k - lSize - 1) right
                     in (new p a left newRight, t2)
 
+{- | \( O(\max\ d_1\ d_2) \). Merge two 'Treap's into single one.
+
+>>> pone p a = one (Priority p) a :: Treap (Sum Int) Int
+>>> putStrLn $ pretty $ merge (merge (pone 1 3) (pone 4 5)) (merge (pone 3 0) (pone 5 9))
+           4,Sum {getSum = 17}:9
+                    ╱
+          3,Sum {getSum = 8}:5
+                   ╱╲
+                  ╱  ╲
+                 ╱    ╲
+                ╱      ╲
+               ╱        ╲
+              ╱          ╲
+             ╱            ╲
+            ╱              ╲
+           ╱                ╲
+          ╱                  ╲
+1,Sum {getSum = 3}:3 1,Sum {getSum = 0}:0
+-}
+merge :: Measured m a => Treap m a -> Treap m a -> Treap m a
+merge Empty r = r
+merge l Empty = l
+merge l@(Node _ p1 _ a1 l1 r1) r@(Node _ p2 _ a2 l2 r2)
+    | p1 > p2   = recalculate $ new p1 a1 l1 (merge r1 r)
+    | otherwise = recalculate $ new p2 a2 (merge l l2) r2
+
 {- | \( O(d) \). @'take' n t@ returns 'Treap' that contains first @n@ elements of the given
 'Treap' @t@.
 -}
@@ -250,31 +277,18 @@ drop n t
             EQ -> new p a Empty r
             GT -> go (i - lSize - 1) r
 
-{- | \( O(\max\ d_1\ d_2) \). Merge two 'Treap's into single one.
-
->>> pone p a = one (Priority p) a :: Treap (Sum Int) Int
->>> putStrLn $ pretty $ merge (merge (pone 1 3) (pone 4 5)) (merge (pone 3 0) (pone 5 9))
-           4,Sum {getSum = 17}:9
-                    ╱
-          3,Sum {getSum = 8}:5
-                   ╱╲
-                  ╱  ╲
-                 ╱    ╲
-                ╱      ╲
-               ╱        ╲
-              ╱          ╲
-             ╱            ╲
-            ╱              ╲
-           ╱                ╲
-          ╱                  ╲
-1,Sum {getSum = 3}:3 1,Sum {getSum = 0}:0
+{- | \( O(d) \). Rotate a 'Treap' to the right by a given number of elements
+modulo treap size. In simple words, @'rotate' n t@ takes first @n@ elements of
+@t@ and puts them at the end of @t@ in the same order.
 -}
-merge :: Measured m a => Treap m a -> Treap m a -> Treap m a
-merge Empty r = r
-merge l Empty = l
-merge l@(Node _ p1 _ a1 l1 r1) r@(Node _ p2 _ a2 l2 r2)
-    | p1 > p2   = recalculate $ new p1 a1 l1 (merge r1 r)
-    | otherwise = recalculate $ new p2 a2 (merge l l2) r2
+rotate :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
+rotate n t = case t of
+    Empty -> Empty
+    _ | n == 0    -> t
+      | otherwise -> let (left, right) = splitAt shift t in merge right left
+  where
+    shift :: Int
+    shift = n `mod` sizeInt t
 
 ----------------------------------------------------------------------------
 -- Modification functions
