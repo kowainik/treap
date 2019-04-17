@@ -26,6 +26,7 @@ module Treap.Pure
        , sizeInt
        , monoid
        , at
+       , query
 
          -- * Cuts and joins
        , splitAt
@@ -171,6 +172,15 @@ at i t
             EQ -> Just a
             LT -> go i l
             GT -> go (k - lSize - 1) r
+
+-- | \( O(d) \). Return value of monoidal accumulator on a segment @[l, r)@.
+query :: forall m a . Measured m a => Int -> Int -> Treap m a -> m
+query from to t
+    | to >= from = mempty
+    | otherwise  =
+        let (_, r) = splitAt from t
+            (m, _) = splitAt (to - from) r
+        in monoid m
 
 ----------------------------------------------------------------------------
 -- Cuts and joins
