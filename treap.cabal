@@ -67,7 +67,7 @@ library
                          Treap.Measured
                          Treap.Pretty
                          Treap.Pure
---                         Treap.Rand
+                         Treap.Rand
 
 
 test-suite treap-test
@@ -77,14 +77,3 @@ test-suite treap-test
   main-is:             Spec.hs
 
   build-depends:       treap
-
-
-benchmark treap-benchmark
-  import:              common-options
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      benchmark
-  main-is:             Main.hs
-
-  build-depends:       containers
-                     , gauge
-                     , treap

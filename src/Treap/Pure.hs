@@ -75,7 +75,7 @@ newtype Priority = Priority
 data Treap m a
     = Node !Size !Priority !m a !(Treap m a) !(Treap m a)
     | Empty
-    deriving (Show, Read, Eq, Generic)
+    deriving stock (Show, Read, Eq, Generic, Foldable)
     deriving anyclass (NFData)
 
 -- | \( O(1) \). Takes cached value from the root.
@@ -99,6 +99,7 @@ priorities are random then the expected performance of the @fromList@ function
 is \( O(n\ \log \ n)\).
 
 __TODO:__ It's possible to implement \( O(n) \) algorithm however.
+See issue #15: <https://github.com/chshersh/treap/issues/15>
 -}
 instance Measured m a => IsList (Treap m a) where
     type Item (Treap m a) = (Priority, a)
@@ -108,6 +109,7 @@ instance Measured m a => IsList (Treap m a) where
     fromList =
         foldl' (\t (i, p, a) -> insert i p a t) Empty
         . zipWith (\i (p, a) -> (i, p, a)) [0..]
+    {-# INLINE fromList #-}
 
     -- TODO: make more efficient
     toList :: Treap m a -> [(Priority, a)]
