@@ -47,6 +47,7 @@ import Prelude hiding (drop, lookup, splitAt, take)
 
 import Control.DeepSeq (NFData)
 import Data.Foldable (foldl')
+import Data.Semigroup ((<>))
 import Data.Word (Word64)
 import GHC.Exts (IsList (..))
 import GHC.Generics (Generic)
