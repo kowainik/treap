@@ -2,7 +2,8 @@
 -}
 
 module Treap
-       ( module T
+       ( module Treap
        ) where
 
-import Treap.Pretty as T (pretty, prettyWith)
+import Treap.Measured as Treap
+import Treap.Rand as Treap

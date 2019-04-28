@@ -1,2 +1,3 @@
 import Treap
+import Data.Monoid
 :set -XTypeApplications

@@ -22,11 +22,15 @@ module Treap.Rand
          -- * General purpose functions
        , withTreap
        , overTreap
+
+         -- * Pretty printing functions
+       , prettyPrint
        ) where
 
 import Prelude hiding (lookup)
 
 import Control.DeepSeq (NFData (..))
+import Data.Coerce (Coercible)
 import Data.Foldable (foldl')
 import GHC.Exts (IsList (..))
 import GHC.Generics (Generic)
@@ -35,6 +39,7 @@ import Treap.Measured (Measured (..))
 import Treap.Pure (Priority (..), Treap)
 
 import qualified System.Random.Mersenne.Pure64 as Random
+import qualified Treap.Pretty as Treap
 import qualified Treap.Pure as Treap
 
 ----------------------------------------------------------------------------
@@ -133,3 +138,11 @@ withTreap f = f . rTreapTree
 -- | Lift a function that works with 'Treap' to 'RTreap'.
 overTreap :: (Treap m a -> Treap m a) -> (RTreap m a -> RTreap m a)
 overTreap set t = t { rTreapTree = set $ rTreapTree t }
+
+----------------------------------------------------------------------------
+-- Pretty printing functions
+----------------------------------------------------------------------------
+
+-- | Pretty prints 'RTreap' without printing random generator.
+prettyPrint :: forall m a . (Coercible m a, Show a) => RTreap m a -> IO ()
+prettyPrint = withTreap Treap.prettyPrint
