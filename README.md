@@ -17,7 +17,7 @@ like sum of elements or minimal element on some contiguous part of the array.
 
 ## When to use this package?
 
-Use this package when you want:
+    Use this package when you want the following operations be fast:
 
 1. Access elements by index.
 2. Insert elements by index.
@@ -42,8 +42,9 @@ the size of the treap):
 | `drop`    | `O(log n)`      | Drop first `i` elements of the treap |
 | `rotate`  | `O(log n)`      | Put first `i` elements to the end    |
 
-## When not to use this package?
+## Alternatives
 
-If you don't need to calculate monoidal operations, use
+If you don't need to calculate monoidal operations you may alternatively use
 [`Seq`](https://hackage.haskell.org/package/containers-0.6.0.1/docs/Data-Sequence.html#t:Seq)
-from the `containers` package.
+from the `containers` package as it provides more extended interface but doesn't
+allow to measure monoidal values on segments.

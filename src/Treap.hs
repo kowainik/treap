@@ -5,10 +5,11 @@
 Package @treap@ implements tree-like data structure called /implicit treap/. This
 data structure implements interface similar to random-access arrays, but with
 fast (logarithmic time complexity)
-@insert@ \/ @delete@ \/ @split@ \/ @merge@ \/ @take@ \/ @drop@ \/ @rotate@ operations.
+@'insert'@ \/ @'delete'@ \/ @'Treap.splitAt'@ \/ @'merge'@ \/ @'Treap.take'@ \/ @'Treap.drop'@ \/ @'rotate'@ operations.
 
-In addition 'RTreap' allows you to specify and measure values of any monoids on a segment,
-like sum of elements or minimal element on some contiguous part of the array.
+In addition 'Treap.Pure.Treap' and 'RTreap' allow you to specify and measure
+values of any monoids on a segment, like sum of elements or minimal element on
+some contiguous part of the array.
 
 == Package structure
 
