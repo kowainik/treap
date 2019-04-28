@@ -54,6 +54,9 @@ import qualified System.Random.Mersenne.Pure64 as Random
 import qualified Treap.Pretty as Treap
 import qualified Treap.Pure as Treap
 
+-- $setup
+-- >>> import Data.Monoid
+
 ----------------------------------------------------------------------------
 -- Data structure and instances
 ----------------------------------------------------------------------------
@@ -66,18 +69,19 @@ data RTreap m a = RTreap
     , rTreapTree :: !(Treap m a)
     } deriving (Show, Generic, Foldable)
 
--- | \( O(1) \). This instance doesn't compare random generators inside trees.
+-- | \( O(n) \). This instance doesn't compare random generators inside trees.
 instance (Eq m, Eq a) => Eq (RTreap m a) where
     (==) :: RTreap m a -> RTreap m a -> Bool
     RTreap _ t1 == RTreap _ t2 = t1 == t2
 
+-- | \( O(1) \). Takes cached value from the root.
 instance Monoid m => Measured m (RTreap m a) where
     measure :: RTreap m a -> m
     measure = withTreap measure
     {-# INLINE measure #-}
 
-{- | Pure implementation of 'RandTreap' construction functions. Uses
-@'empty' :: RandTreap k a@ as a starting point. Functions have the following
+{- | Pure implementation of 'RTreap' construction functions. Uses
+@'empty' :: RTreap k a@ as a starting point. Functions have the following
 time complexity:
 
 1. 'fromList': \( O(n\ \log \ n) \)
@@ -152,7 +156,7 @@ size :: RTreap m a -> Int
 size = unSize . withTreap Treap.size
 {-# INLINE size #-}
 
--- | \( O(\log \ n) \). Lookup a value by a given key inside 'RandTreap'.
+-- | \( O(\log \ n) \). Lookup a value by a given key inside 'RTreap'.
 at :: Int -> RTreap m a -> Maybe a
 at i = withTreap $ Treap.at i
 {-# INLINE at #-}
@@ -203,7 +207,7 @@ insert i a (RTreap gen t) =
 {-# INLINE insert #-}
 
 {- | \( O(\log \ n) \). Delete 'RTreap' node that contains given key. If there is no
-such key, 'RandTreap' remains unchanged.
+such key, 'RTreap' remains unchanged.
 -}
 delete :: forall m a . Measured m a => Int -> RTreap m a -> RTreap m a
 delete i (RTreap gen t) = RTreap gen $ Treap.delete i t

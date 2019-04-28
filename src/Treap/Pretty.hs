@@ -25,13 +25,14 @@ import Treap.Pure (Priority (..), Size (..), Treap (..))
 pretty :: forall m a . (Coercible m a, Show a) => Treap m a -> String
 pretty = prettyWith compactShowNode
 
+-- | Call 'pretty' function and output the result directly to @stdout@.
 prettyPrint :: forall m a . (Coercible m a, Show a) => Treap m a -> IO ()
 prettyPrint = putStrLn . pretty
 
 {- | Show 'Treap' node in a format:
 
 @
-<size>,<acc>:a
+\<size\>,\<acc\>:a
 @
 -}
 compactShowNode
@@ -61,6 +62,7 @@ data BinTree
     = Leaf
     | Branch String BinTree BinTree
 
+-- | Hardcore function responsible for pretty showing of the 'BinTree' data type.
 showTree :: BinTree -> String
 showTree Leaf                  = ""
 showTree (Branch label left right) = case (left, right) of
