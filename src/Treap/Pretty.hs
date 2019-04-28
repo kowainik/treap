@@ -2,6 +2,7 @@
 
 module Treap.Pretty
        ( pretty
+       , prettyPrint
        , prettyWith
        , compactShowNode
 
@@ -13,25 +14,35 @@ module Treap.Pretty
        ) where
 
 import Data.Char (isSpace)
+import Data.Coerce (Coercible, coerce)
 import Data.List (dropWhileEnd, intercalate)
 
 import Treap.Pure (Priority (..), Size (..), Treap (..))
 
 
-{- | Show 'Treap' in an extremely nice and pretty way.
+{- | Show 'Treap' in a pretty way using 'compactShowNode' function.
 -}
-pretty :: forall m a . (Show m, Show a) => Treap m a -> String
+pretty :: forall m a . (Coercible m a, Show a) => Treap m a -> String
 pretty = prettyWith compactShowNode
+
+prettyPrint :: forall m a . (Coercible m a, Show a) => Treap m a -> IO ()
+prettyPrint = putStrLn . pretty
 
 {- | Show 'Treap' node in a format:
 
 @
-<key>,<priority>:a
+<size>,<acc>:a
 @
 -}
-compactShowNode :: (Show m, Show a) => Size -> Priority -> m -> a -> String
+compactShowNode
+    :: forall m a . (Coercible m a, Show a)
+    => Size
+    -> Priority
+    -> m
+    -> a
+    -> String
 compactShowNode (Size sz) _ m a =
-    show sz ++ "," ++ show m ++ ":" ++ show a
+    show sz ++ "," ++ show (coerce @m @a m) ++ ":" ++ show a
 
 -- | Show 'Treap' in a nice way using given function to display node.
 prettyWith

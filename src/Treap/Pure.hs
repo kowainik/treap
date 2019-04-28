@@ -228,21 +228,14 @@ splitAt i t
 {- | \( O(\max\ d_1\ d_2) \). Merge two 'Treap's into single one.
 
 >>> pone p a = one (Priority p) a :: Treap (Sum Int) Int
->>> putStrLn $ pretty $ merge (merge (pone 1 3) (pone 4 5)) (merge (pone 3 0) (pone 5 9))
-           4,Sum {getSum = 17}:9
-                    ╱
-          3,Sum {getSum = 8}:5
-                   ╱╲
-                  ╱  ╲
-                 ╱    ╲
-                ╱      ╲
-               ╱        ╲
-              ╱          ╲
-             ╱            ╲
-            ╱              ╲
-           ╱                ╲
-          ╱                  ╲
-1,Sum {getSum = 3}:3 1,Sum {getSum = 0}:0
+>>> prettyPrint $ merge (merge (pone 1 3) (pone 4 5)) (merge (pone 3 0) (pone 5 9))
+   4,17:9
+     ╱
+   3,8:5
+     ╱╲
+    ╱  ╲
+   ╱    ╲
+1,3:3 1,0:0
 -}
 merge :: Measured m a => Treap m a -> Treap m a -> Treap m a
 merge Empty r = r
