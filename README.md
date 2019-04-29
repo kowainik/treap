@@ -6,18 +6,18 @@
 
 Efficient implementation of the implicit treap data structure.
 
-## What this package provides?
+## What does this package provide?
 
-This package implements tree-like data structure called _implicit treap_. This
+This package implements a tree-like data structure called _implicit treap_. This
 data structure implements interface similar to random-access arrays, but with
 fast (logarithmic time complexity)
-`insert`/`delete`/`split`/`merge`/`take`/`drop`/`rotate` operations. In addition
+`insert`/`delete`/`split`/`merge`/`take`/`drop`/`rotate` operations. In addition,
 _treap_ allows you to specify and measure values of any monoids on a segment,
-like sum of elements or minimal element on some contiguous part of the array.
+like a sum of elements or minimal element on some contiguous part of the array.
 
 ## When to use this package?
 
-    Use this package when you want the following operations be fast:
+Use this package when you want the following operations to be fast:
 
 1. Access elements by index.
 2. Insert elements by index.
@@ -37,14 +37,32 @@ the size of the treap):
 | `delete`  | `O(log n)`      | Delete by index                      |
 | `query`   | `O(log n)`      | Measure monoid on the segment        |
 | `splitAt` | `O(log n)`      | Split treap by index into two treaps |
-| `merge`   | `O(log n)`      | Merge two treaps into single one     |
+| `merge`   | `O(log n)`      | Merge two treaps into a single one   |
 | `take`    | `O(log n)`      | Take first `i` elements of the treap |
 | `drop`    | `O(log n)`      | Drop first `i` elements of the treap |
 | `rotate`  | `O(log n)`      | Put first `i` elements to the end    |
 
+The package also comes with nice pretty-printing!
+
+```haskell
+ghci> t = fromList [1..5] :: RTreap (Sum Int) Int
+ghci> prettyPrint t
+   5,15:2
+      ╱╲
+     ╱  ╲
+    ╱    ╲
+   ╱      ╲
+1,1:1   3,12:4
+          ╱╲
+         ╱  ╲
+        ╱    ╲
+      1,3:3 1,5:5
+
+```
+
 ## Alternatives
 
-If you don't need to calculate monoidal operations you may alternatively use
+If you don't need to calculate monoidal operations, you may alternatively use
 [`Seq`](https://hackage.haskell.org/package/containers-0.6.0.1/docs/Data-Sequence.html#t:Seq)
 from the `containers` package as it provides more extended interface but doesn't
 allow to measure monoidal values on segments.
