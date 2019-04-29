@@ -1,6 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 
-{- | Typeclass that tells how to convert different values into 'Monoid'.
+{- | Typeclass that tells how to measure different values as 'Monoid'.
 -}
 
 module Treap.Measured
@@ -13,6 +13,9 @@ import Data.Monoid (All (..), Any (..), Dual (..), Endo (..), First (..), Last (
 import Data.Semigroup (Max (..), Min (..))
 
 
+{- | This typeclass allows to specify how to convert value of type @a@ into
+monoidal value of type @m@.
+-}
 class Monoid m => Measured m a where
     measure :: a -> m
 

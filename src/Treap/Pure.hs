@@ -53,11 +53,15 @@ import GHC.Generics (Generic)
 
 import Treap.Measured (Measured (..))
 
+-- $setup
+-- >>> import Data.Monoid
+-- >>> import Treap.Pretty
+
 ----------------------------------------------------------------------------
 -- Data structure and instances
 ----------------------------------------------------------------------------
 
-{- | Size of the 'Treap' data structure.
+{- | Size of the 'Treap' data structure. Guaranteed to be always non-negative.
 -}
 newtype Size = Size
     { unSize :: Int
@@ -147,7 +151,7 @@ size = \case
     Node s _ _ _ _ _ -> s
 {-# INLINE size #-}
 
--- Convenient internal function
+-- | Take size of the 'Treap' as 'Int'.
 sizeInt :: Treap m a -> Int
 sizeInt = unSize . size
 {-# INLINE sizeInt #-}
@@ -202,7 +206,7 @@ new p a l r = recalculate $ Node 0 p mempty a l r
 
 __Special cases:__
 
-1. If \( i \leqslant n \) then the result is @('empty', t)@.
+1. If \( i \leqslant 0 \) then the result is @('empty', t)@.
 2. If \( i \geqslant n \) then the result is @(t, 'empty')@.
 -}
 splitAt :: forall m a . Measured m a => Int -> Treap m a -> (Treap m a, Treap m a)
@@ -246,6 +250,11 @@ merge l@(Node _ p1 _ a1 l1 r1) r@(Node _ p2 _ a2 l2 r2)
 
 {- | \( O(d) \). @'take' n t@ returns 'Treap' that contains first @n@ elements of the given
 'Treap' @t@.
+
+__Special cases:__
+
+1. If \( i \leqslant 0 \) then the result is 'empty'.
+2. If \( i \geqslant n \) then the result is @t@.
 -}
 take :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
 take n t
@@ -265,6 +274,11 @@ take n t
 
 {- | \( O(d) \). @'drop' n t@ returns 'Treap' without first @n@ elements of the given
 'Treap' @t@.
+
+__Special cases:__
+
+1. If \( i \leqslant 0 \) then the result is @t@.
+2. If \( i \geqslant n \) then the result is 'empty'.
 -}
 drop :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
 drop n t
@@ -284,7 +298,8 @@ drop n t
 
 {- | \( O(d) \). Rotate a 'Treap' to the right by a given number of elements
 modulo treap size. In simple words, @'rotate' n t@ takes first @n@ elements of
-@t@ and puts them at the end of @t@ in the same order.
+@t@ and puts them at the end of @t@ in the same order. If the given index is
+negative, then this function rotates left.
 -}
 rotate :: forall m a . Measured m a => Int -> Treap m a -> Treap m a
 rotate n t = case t of

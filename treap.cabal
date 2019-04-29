@@ -5,8 +5,8 @@ synopsis:            Efficient implementation of the implicit treap data structu
 description:
     Efficient implementation of the implicit treap data structure.
     Use this data structure if you want dynamic arrays with fast operations on segments.
-homepage:            https://github.com/ChShersh/treap
-bug-reports:         https://github.com/ChShersh/treap/issues
+homepage:            https://github.com/chshersh/treap
+bug-reports:         https://github.com/chshersh/treap/issues
 license:             MPL-2.0
 license-file:        LICENSE
 author:              Dmitrii Kovanikov
@@ -21,7 +21,7 @@ tested-with:         GHC == 8.4.4
 
 source-repository head
   type:                git
-  location:            https://github.com/ChShersh/treap.git
+  location:            https://github.com/chshersh/treap.git
 
 common common-options
   build-depends:       base >= 4.11 && < 4.13
@@ -83,3 +83,16 @@ test-suite treap-test
   build-depends:       treap
                      , hspec
                      , hspec-core
+
+
+test-suite treap-doctest
+  import:              common-options
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Doctest.hs
+
+  build-depends:       doctest
+                     , Glob
+
+  ghc-options:         -threaded
+  default-language:    Haskell2010
