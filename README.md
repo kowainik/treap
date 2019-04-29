@@ -1,5 +1,6 @@
 # treap
 
+![Treap: tree logo](https://user-images.githubusercontent.com/4276606/56883228-9f32f180-6a98-11e9-9554-13735ff1ed30.png)
 [![Hackage](https://img.shields.io/hackage/v/treap.svg)](https://hackage.haskell.org/package/treap)
 [![Build status](https://secure.travis-ci.org/chshersh/treap.svg)](https://travis-ci.org/chshersh/treap)
 [![MPL-2.0 license](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE)
@@ -66,3 +67,7 @@ If you don't need to calculate monoidal operations, you may alternatively use
 [`Seq`](https://hackage.haskell.org/package/containers-0.6.0.1/docs/Data-Sequence.html#t:Seq)
 from the `containers` package as it provides more extended interface but doesn't
 allow to measure monoidal values on segments.
+
+## Acknowledgement
+
+Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
