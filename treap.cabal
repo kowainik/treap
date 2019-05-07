@@ -79,10 +79,13 @@ test-suite treap-test
                          Test.Rand.Cuts
                          Test.Rand.Query
                          Test.Rand.Update
+                         Test.Rand.Laws
 
   build-depends:       treap
                      , hspec
                      , hspec-core
+                     , hedgehog >= 0.6
+                     , hw-hspec-hedgehog
 
 
 test-suite treap-doctest

@@ -69,6 +69,12 @@ data RTreap m a = RTreap
     , rTreapTree :: !(Treap m a)
     } deriving (Show, Generic, Foldable)
 
+instance Measured m a => Semigroup (RTreap m a) where
+    (<>) = merge
+
+instance Measured m a => Monoid (RTreap m a) where
+    mempty = empty
+
 -- | \( O(n) \). This instance doesn't compare random generators inside trees.
 instance (Eq m, Eq a) => Eq (RTreap m a) where
     (==) :: RTreap m a -> RTreap m a -> Bool
