@@ -27,7 +27,8 @@ with :: [Int] -> Int -> ([Int], Sum Int)
 with l m = (l, Sum m)
 
 describedAs :: TestTreap -> ([Int], Sum Int) -> Expectation
-describedAs t nodesMeasure = (treapNodes, Sum treapMeasure) `shouldBe` nodesMeasure
+describedAs t expectedNodesMeasure
+    = treapNodes `with` treapMeasure `shouldBe` expectedNodesMeasure
   where
     treapMeasure :: Int
     treapMeasure = extractSum t
