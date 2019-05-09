@@ -7,7 +7,7 @@ import HaskellWorks.Hspec.Hedgehog (require)
 import Hedgehog (Gen, forAll, property, (===))
 import Test.Hspec (Spec, describe, it)
 
-import Test.Common (emptyTreap, TestTreap())
+import Test.Common (TestTreap())
 
 import qualified Hedgehog.Gen   as Gen
 import qualified Hedgehog.Range as Range
@@ -38,6 +38,5 @@ monoidSpec =
         it "identity" $
             require $ property $ do
                 a :: TestTreap <- fromList <$> forAll prop_int_list
-                let
-                    e = emptyTreap
-                a <> e === a
+                a <> mempty === a
+                mempty <> a === a
