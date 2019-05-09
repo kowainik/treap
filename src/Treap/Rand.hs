@@ -69,9 +69,13 @@ data RTreap m a = RTreap
     , rTreapTree :: !(Treap m a)
     } deriving (Show, Generic, Foldable)
 
+{- | (<>) is implemented via 'merge'.
+-}
 instance Measured m a => Semigroup (RTreap m a) where
     (<>) = merge
 
+{- | mempty is implemented via 'empty'.
+-}
 instance Measured m a => Monoid (RTreap m a) where
     mempty = empty
 
