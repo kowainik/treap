@@ -25,6 +25,7 @@ extractSum = getSum . measure
 
 with :: [Int] -> Int -> ([Int], Sum Int)
 with l m = (l, Sum m)
+infixr 9 `with`
 
 describedAs :: TestTreap -> ([Int], Sum Int) -> Expectation
 describedAs t expectedNodesMeasure
@@ -34,3 +35,4 @@ describedAs t expectedNodesMeasure
     treapMeasure = extractSum t
     treapNodes :: [Int]
     treapNodes   = toList t
+infixr 8 `describedAs`
