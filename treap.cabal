@@ -84,7 +84,7 @@ test-suite treap-test
   build-depends:       treap
                      , hspec
                      , hspec-core
-                     , hedgehog >= 0.6
+                     , hedgehog ^>= 0.6
                      , hw-hspec-hedgehog
 
 
