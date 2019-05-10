@@ -82,6 +82,16 @@ data Treap m a
     deriving stock (Show, Read, Eq, Generic, Foldable)
     deriving anyclass (NFData)
 
+{- | (<>) is implemented via 'merge'.
+-}
+instance Measured m a => Semigroup (Treap m a) where
+    (<>) = merge
+
+{- | mempty is implemented via 'empty'.
+-}
+instance Measured m a => Monoid (Treap m a) where
+    mempty = empty
+
 -- | \( O(1) \). Takes cached value from the root.
 instance Monoid m => Measured m (Treap m a) where
     measure = monoid
