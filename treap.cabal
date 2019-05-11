@@ -86,6 +86,7 @@ test-suite treap-test
                      , hspec-core
                      , hedgehog ^>= 0.6
                      , hw-hspec-hedgehog
+                     , hspec-expectations
 
 
 test-suite treap-doctest
