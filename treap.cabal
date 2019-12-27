@@ -1,6 +1,6 @@
 cabal-version:       2.4
 name:                treap
-version:             0.0.0.0
+version:             0.1.0.0
 synopsis:            Efficient implementation of the implicit treap data structure
 description:
     Efficient implementation of the implicit treap data structure.
@@ -17,14 +17,15 @@ build-type:          Simple
 extra-doc-files:     README.md
                    , CHANGELOG.md
 tested-with:         GHC == 8.4.4
-                   , GHC == 8.6.4
+                     GHC == 8.6.4
+                     GHC == 8.8.1
 
 source-repository head
   type:                git
   location:            https://github.com/chshersh/treap.git
 
 common common-options
-  build-depends:       base >= 4.11 && < 4.13
+  build-depends:       base >= 4.11 && < 4.14
 
   ghc-options:         -Wall
                        -Wincomplete-uni-patterns
@@ -84,7 +85,7 @@ test-suite treap-test
   build-depends:       treap
                      , hspec
                      , hspec-core
-                     , hedgehog ^>= 0.6
+                     , hedgehog ^>= 1.0.1
                      , hw-hspec-hedgehog
                      , hspec-expectations
 

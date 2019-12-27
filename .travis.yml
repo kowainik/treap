@@ -14,6 +14,7 @@ matrix:
   include:
   - ghc: 8.4.4
   - ghc: 8.6.4
+  - ghc: 8.8.1
 
 install:
   - cabal new-update
