@@ -18,7 +18,7 @@ matrix:
 
 install:
   - cabal update
-  - cabal build --enable-tests --enable-benchmarks
+  - cabal build --enable-tests --enable-benchmarks --write-ghc-environment-files=always
 
 script:
   - cabal test --enable-tests
