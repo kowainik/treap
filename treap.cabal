@@ -15,7 +15,7 @@ copyright:           2019 Dmitrii Kovanikov
 category:            Data Structure, Tree
 build-type:          Simple
 extra-doc-files:     README.md
-                   , CHANGELOG.md
+                     CHANGELOG.md
 tested-with:         GHC == 8.4.4
                      GHC == 8.6.4
                      GHC == 8.8.1
@@ -59,7 +59,6 @@ common common-options
                        ScopedTypeVariables
                        TypeApplications
 
-
 library
   import:              common-options
   build-depends:       deepseq ^>= 1.4
@@ -71,7 +70,6 @@ library
                          Treap.Pretty
                          Treap.Pure
                          Treap.Rand
-
 
 test-suite treap-test
   import:              common-options
@@ -91,7 +89,6 @@ test-suite treap-test
                      , hedgehog ^>= 1.0.1
                      , hw-hspec-hedgehog
                      , hspec-expectations
-
 
 test-suite treap-doctest
   import:              common-options
